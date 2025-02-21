@@ -3,64 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JDT Infos</title>
+    <title>QR Code Attendance</title>
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
 </head>
-<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+<body style="font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; padding: 20px;">
 
     <!-- Header Section -->
-    <header style="background: linear-gradient(90deg, #007bff, #00c6ff); color: white; text-align: center; padding: 30px;">
-        <h1 style="margin: 0;">Welcome to JDT Infos</h1>
-        <p>Your Trusted Technology Partner</p>
+    <header style="background: linear-gradient(90deg, #007bff, #00c6ff); color: white; padding: 20px;">
+        <h1>QR Code Attendance System</h1>
     </header>
 
-    <!-- Hero Section -->
-    <section style="text-align: center; padding: 50px; background-color: white;">
-        <h2 style="color: #007bff;">Empowering Businesses with Technology</h2>
-        <p>JDT Infos specializes in software development, IT consulting, and digital solutions.</p>
-        <img src="https://via.placeholder.com/800x400" alt="JDT Infos Office" style="width: 90%; max-width: 800px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+    <!-- QR Code Scanner Section -->
+    <section style="margin-top: 20px; background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <h2 style="color: #007bff;">Scan QR Code</h2>
+        <div id="reader" style="width: 300px; margin: auto;"></div>
+        <p id="result" style="font-size: 18px; margin-top: 10px; font-weight: bold;"></p>
+        <button id="markAttendance" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">Mark Attendance</button>
     </section>
 
-    <!-- Services Section -->
-    <section style="padding: 50px; background-color: #007bff; color: white; text-align: center;">
-        <h2>Our Services</h2>
-        <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-            <div style="width: 300px; margin: 15px; padding: 20px; background: white; color: black; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                <h3>Software Development</h3>
-                <p>We build customized solutions for businesses.</p>
-            </div>
-            <div style="width: 300px; margin: 15px; padding: 20px; background: white; color: black; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                <h3>IT Consulting</h3>
-                <p>Expert guidance to transform your IT strategy.</p>
-            </div>
-            <div style="width: 300px; margin: 15px; padding: 20px; background: white; color: black; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
-                <h3>Cloud Solutions</h3>
-                <p>Secure and scalable cloud computing services.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section style="padding: 50px; background-color: white; text-align: center;">
-        <h2 style="color: #007bff;">Why Choose JDT Infos?</h2>
-        <p>With over 10 years of experience, we deliver high-quality technology solutions tailored to your business needs.</p>
-        <ul style="list-style: none; padding: 0;">
-            <li style="margin: 10px 0; font-size: 18px;">✔ Experienced Developers</li>
-            <li style="margin: 10px 0; font-size: 18px;">✔ Cutting-Edge Technology</li>
-            <li style="margin: 10px 0; font-size: 18px;">✔ 24/7 Customer Support</li>
-        </ul>
-    </section>
-
-    <!-- Contact Section -->
-    <section style="padding: 50px; background-color: #00c6ff; color: white; text-align: center;">
-        <h2>Contact Us</h2>
-        <p>Email: info@jdtinfos.com | Phone: +91 98765 43210</p>
-        <button style="padding: 10px 20px; background-color: white; color: #007bff; border: none; font-size: 16px; cursor: pointer; border-radius: 5px;">Get in Touch</button>
-    </section>
-
-    <!-- Footer Section -->
-    <footer style="background-color: #333; color: white; text-align: center; padding: 20px; margin-top: 20px;">
-        <p>&copy; 2025 JDT Infos | All Rights Reserved</p>
+    <!-- Footer -->
+    <footer style="background-color: #333; color: white; padding: 10px; margin-top: 20px;">
+        <p>&copy; 2025 QR Attendance System</p>
     </footer>
+
+    <!-- JavaScript for QR Code Scanning -->
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            document.getElementById("result").innerHTML = "Scanned: " + decodedText;
+            document.getElementById("markAttendance").style.display = "block";
+            document.getElementById("markAttendance").onclick = function () {
+                alert("Attendance Marked for: " + decodedText);
+            };
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QR Code scan error: ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    </script>
 
 </body>
 </html>
